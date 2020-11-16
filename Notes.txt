@@ -1,0 +1,48 @@
+Bra saker att veta:
+
+void DrawTextRecEx (Font font, const char *text, Rectangle rec, float fontSize,
+                    float spacing, bool wordWrap, Color tint, int selectStart,
+                    int selectLength, Color selectTint, Color selectBackTint);
+
+Gör linebreaks om ett rad text är över nått limit
+
+void DrawFPS (int posX, int posY);
+
+Displayar frames
+
+
+
+    float pX = 0;
+
+    float pY = 0;
+
+    int perlinX = generator.Next(0, 200);
+
+    int perlinX2 = generator.Next(0, 100);
+
+    int perlinSCL = generator.Next(5, 10);
+
+    Image testGen = Raylib.GenImagePerlinNoise(512, 512, perlinX, perlinX2, perlinSCL);
+
+    Raylib.ImageResizeNN(ref testGen, 3200, 2400);
+
+    Texture2D test = Raylib.LoadTextureFromImage(testGen);
+
+
+Genererar perlin noise texturer (pX och pY kan användas för att få den att röras på sig)
+
+if (pX < -2400)
+    {
+
+        pX = 0;
+        pY = 0;
+
+    }
+
+        pX -= 0.4f;
+        pY -= 0.2f;
+
+Det här med perlin noisen i en while loop för en rörande bg 
+
+
+
