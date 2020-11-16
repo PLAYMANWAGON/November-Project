@@ -27,7 +27,7 @@ namespace RPG
 
             int width = 800;
 
-            int height = 600;
+            //int height = 600;
 
             string[] prologue = { "Dialogue 1", "Dialogue 2" };
 
@@ -43,22 +43,22 @@ namespace RPG
 
 
 
-                //NORTH--------------------------------------------------
+
             Image charLoN = Raylib.LoadImage(@"worldN.png");
 
             Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
 
-                //SOUTH--------------------------------------------------
+
             Image charLoS = Raylib.LoadImage(@"worldS.png");
 
             Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
 
-                //EAST---------------------------------------------------
+
             Image charLoE = Raylib.LoadImage(@"worldE.png");
 
             Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
 
-                //WEST---------------------------------------------------
+  
             Image charLoW = Raylib.LoadImage(@"worldW.png");
 
             Texture2D worldW = Raylib.LoadTextureFromImage(charLoW);
