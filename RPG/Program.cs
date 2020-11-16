@@ -15,6 +15,8 @@ namespace RPG
 
             string scene = "titleScreen";
 
+            string facing = "south";
+
             string[] menuSelect = { "start", "options" };
 
             float xPos = 384;
@@ -23,15 +25,46 @@ namespace RPG
 
             int menu = 0;
 
+            int width = 800;
+
+            int height = 600;
+
             string[] prologue = { "Dialogue 1", "Dialogue 2" };
 
-            //Minion Texture
+            //Character Texture Inside
 
-            Image minionImg = Raylib.LoadImage(@"minion.png");
+            Image charImg = Raylib.LoadImage(@"still.png");
 
-            Raylib.ImageResize(ref minionImg, 32, 32);
+            Texture2D stand = Raylib.LoadTextureFromImage(charImg);
 
-            Texture2D minionTex = Raylib.LoadTextureFromImage(minionImg);
+
+
+            //Character Texture - World
+
+
+
+                //NORTH--------------------------------------------------
+            Image charLoN = Raylib.LoadImage(@"worldN.png");
+
+            Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
+
+                //SOUTH--------------------------------------------------
+            Image charLoS = Raylib.LoadImage(@"worldS.png");
+
+            Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
+
+                //EAST---------------------------------------------------
+            Image charLoE = Raylib.LoadImage(@"worldE.png");
+
+            Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
+
+                //WEST---------------------------------------------------
+            Image charLoW = Raylib.LoadImage(@"worldW.png");
+
+            Texture2D worldW = Raylib.LoadTextureFromImage(charLoW);
+
+
+
 
             //Grass Texture
 
@@ -40,6 +73,8 @@ namespace RPG
             Raylib.ImageResizeNN(ref grassImg, 64, 64);
 
             Texture2D grassTex = Raylib.LoadTextureFromImage(grassImg);
+
+            Raylib.SetTargetFPS(60);
 
 
 
@@ -51,45 +86,81 @@ namespace RPG
             while (!Raylib.WindowShouldClose())
             {
 
-                Raylib.SetWindowIcon(grassImg);
-
-
-
 
                 if (scene == "game")
                 {
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
                     {
+                        facing = "east";
 
-                        xPos += 0.5f;
+                        Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
+
+                        xPos += 5f;
 
                     }
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT))
                     {
+                        facing = "west";
 
-                        xPos -= 0.5f;
+                        Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
+
+                        xPos -= 5f;
+
                     }
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_UP))
                     {
+                        facing = "north";
 
-                        yPos -= 0.5f;
+                        Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
+
+                        yPos -= 5f;
+                        
                     }
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
                     {
+                        facing = "south";
 
-                        yPos += 0.5f;
+                        Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
+
+                        yPos += 5f;
+                    }
+
+
+                    //"KEEP CHARACTER SPRITE IN THE SAME DIRECTION WHEN NOT PRESSING ANYTHING" CODE
+
+
+                    if (facing == "east") {
+
+                        Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
+
+                    }
+
+                    if (facing == "west") {
+
+                        Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
+
+                    }
+
+                    if (facing == "north") {
+
+                        Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
+
+                    }
+
+                    if (facing == "south"){
+
+                        Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
+
                     }
 
 
                     Raylib.BeginDrawing();
 
                     Raylib.ClearBackground(Color.WHITE);
-
-                    //Raylib.DrawTexture(minionTex, (int)xPos, (int)yPos, Color.WHITE);
 
                     Raylib.EndDrawing();
 
@@ -100,24 +171,54 @@ namespace RPG
 
                 if (scene == "titleScreen")
                 {
+                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)){
+
+                        menu ++;
+
+                    }
+
+                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_UP)){
+
+                        menu --;
+
+                    }
+
 
                     Raylib.BeginDrawing();
+
+                    
+                        if (menu == 0) {
+
+                            Raylib.DrawText("<", 500, 300, 32, Color.WHITE);
+
+                        }
+
+                        if (menu == 1) {
+
+                            Raylib.DrawText("<", 500, 350, 32, Color.WHITE);
+
+                        }
+
+                        if (menu == 2) {
+
+                            Raylib.DrawText("<", 500, 400, 32, Color.WHITE);
+
+                        }
+
+                        if (menu == 0 && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
+
+                            scene = "game";
+                        }
+
 
                     Raylib.ClearBackground(Color.PURPLE);
 
                     Raylib.DrawText("Text", 240, 100, 128, Color.WHITE);
 
-                    Raylib.DrawText("Start Game", 300, 300, 32, Color.WHITE);
-                    Raylib.DrawText("Options", 330, 350, 32, Color.WHITE);
-
-
-
-                    foreach (Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN) && menu < 2)
-                    {
-
-                        menu++;
-
-                    }
+                    Raylib.DrawText("Start Game", width/3 + 20, 300, 32, Color.WHITE);
+                    Raylib.DrawText("Options", width/3 + 20, 350, 32, Color.WHITE);
+                    Raylib.DrawText("Quit", width/3 + 20, 400, 32, Color.WHITE);
+                    
 
 
 
