@@ -43,22 +43,22 @@ namespace RPG
 
 
 
-
+                    //NORTH--------------------------------------------------
             Image charLoN = Raylib.LoadImage(@"worldN.png");
 
             Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
 
-
+                    //SOUTH--------------------------------------------------
             Image charLoS = Raylib.LoadImage(@"worldS.png");
 
             Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
 
-
+                    //EAST--------------------------------------------------
             Image charLoE = Raylib.LoadImage(@"worldE.png");
 
             Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
 
-  
+                    //WEST--------------------------------------------------
             Image charLoW = Raylib.LoadImage(@"worldW.png");
 
             Texture2D worldW = Raylib.LoadTextureFromImage(charLoW);
@@ -185,7 +185,6 @@ namespace RPG
 
 
                     Raylib.BeginDrawing();
-
                     
                         if (menu == 0) {
 
@@ -210,6 +209,15 @@ namespace RPG
                             scene = "game";
                         }
 
+                        if (menu > 2) {
+
+                             menu = 2;
+                        }
+
+                        if (menu < 0) {
+
+                            menu = 0;
+                        }
 
                     Raylib.ClearBackground(Color.PURPLE);
 
