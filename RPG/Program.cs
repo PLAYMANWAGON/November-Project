@@ -9,29 +9,47 @@ namespace RPG
         {
             Raylib.InitWindow(800, 600, "Zelli's Quest");
 
+            //THE COOL GENERATOR
+
             Random generator = new Random();
 
+            //-----STRINGS-----
 
+            //GAME SCENE THINGY
 
             string scene = "titleScreen";
 
+            //THE STRING THAT MAKES THE CHARACTER FACE THE SAME DIRECTION AFTER RELEASING A DIRECTION BUTTON
+
             string facing = "south";
 
-            string[] menuSelect = { "start", "options" };
+            //TALKY STUFF
+
+            string[] text = { "Dialogue 1", "Dialogue 2" };
+
+            //-----FLOATS-----
+
+            //CHARACTER STARTING POSITION
 
             float xPos = 384;
 
             float yPos = 284;
 
+            //-----INTEGERS-----
+
+            //THE SHITTY INTEGER THAT MAKES THE MENU WORK (IF IT WORKS, IT WORKS)
+
             int menu = 0;
+
+            //WIDTH AND HEIGHT INTEGERS IF I NEED TO PLACE SOMETHING IN SOME POSITION
 
             int width = 800;
 
-            //int height = 600;
+            int height = 600;
 
-            string[] prologue = { "Dialogue 1", "Dialogue 2" };
+            
 
-            //Character Texture Inside
+            //CHARACTER TEXTURE - INSIDE
 
             Image charImg = Raylib.LoadImage(@"still.png");
 
@@ -39,34 +57,42 @@ namespace RPG
 
 
 
-            //Character Texture - World
+            //CHARACTER TEXTURE - WORLD
 
 
 
                     //NORTH--------------------------------------------------
             Image charLoN = Raylib.LoadImage(@"worldN.png");
 
+            Raylib.ImageResizeNN(ref charLoN, 64, 64);
+
             Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
 
                     //SOUTH--------------------------------------------------
             Image charLoS = Raylib.LoadImage(@"worldS.png");
+
+            Raylib.ImageResizeNN(ref charLoS, 64, 64);
 
             Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
 
                     //EAST--------------------------------------------------
             Image charLoE = Raylib.LoadImage(@"worldE.png");
 
+            Raylib.ImageResizeNN(ref charLoE, 64, 64);
+
             Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
 
                     //WEST--------------------------------------------------
             Image charLoW = Raylib.LoadImage(@"worldW.png");
+
+            Raylib.ImageResizeNN(ref charLoW, 64, 64);
 
             Texture2D worldW = Raylib.LoadTextureFromImage(charLoW);
 
 
 
 
-            //Grass Texture
+            //CRAP GRASS TEXTURE
 
             Image grassImg = Raylib.LoadImage(@"grassTex.png");
 
@@ -90,6 +116,8 @@ namespace RPG
                 if (scene == "game")
                 {
 
+                    bool isMoving = false;
+
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
                     {
                         facing = "east";
@@ -97,6 +125,8 @@ namespace RPG
                         Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
 
                         xPos += 5f;
+
+                        isMoving = true;
 
                     }
 
@@ -108,6 +138,8 @@ namespace RPG
 
                         xPos -= 5f;
 
+                        isMoving = true;
+
                     }
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_UP))
@@ -117,6 +149,8 @@ namespace RPG
                         Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
 
                         yPos -= 5f;
+
+                        isMoving = true;
                         
                     }
 
@@ -127,33 +161,39 @@ namespace RPG
                         Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
 
                         yPos += 5f;
+
+                        isMoving = true;
                     }
 
+                    //THE CODE THAT REMOVES GHOSTING (OTHERWISE TWO SPRITES ARE DISPLAYED AT THE SAME TIME WHILE MOVING)
 
+                    if (isMoving == false) {
+                    
                     //"KEEP CHARACTER SPRITE IN THE SAME DIRECTION WHEN NOT PRESSING ANYTHING" CODE
 
+                        if (facing == "east") {
 
-                    if (facing == "east") {
+                            Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
 
-                        Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
+                        }
 
-                    }
+                        if (facing == "west") {
 
-                    if (facing == "west") {
+                            Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
 
-                        Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
+                        }
 
-                    }
+                        if (facing == "north") {
 
-                    if (facing == "north") {
+                            Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
 
-                        Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
+                        }
 
-                    }
+                        if (facing == "south"){
 
-                    if (facing == "south"){
+                            Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
 
-                        Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
+                        }
 
                     }
 
