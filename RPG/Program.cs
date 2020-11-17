@@ -13,6 +13,10 @@ namespace RPG
 
             Random generator = new Random();
 
+            //CollisionDetection Square
+
+            new colRect = 
+
             //-----STRINGS-----
 
             //GAME SCENE THINGY
@@ -47,7 +51,9 @@ namespace RPG
 
             int height = 600;
 
-            
+
+            //-----IMAGES AND TEXTURES AND SCENES-----
+
 
             //CHARACTER TEXTURE - INSIDE
 
@@ -100,6 +106,38 @@ namespace RPG
 
             Texture2D grassTex = Raylib.LoadTextureFromImage(grassImg);
 
+            //SCENE 1 TEXTURES
+
+                //SCENERY
+
+            Image scene1Img = Raylib.LoadImage(@"scene1.png");
+
+            Raylib.ImageResizeNN(ref scene1Img, 800, 600);
+
+            Texture2D scene1Tex = Raylib.LoadTextureFromImage(scene1Img);
+
+                //SCENERY OBJECTS
+            
+            //TOP LAYER
+            Image scene1ObjLyr1Img = Raylib.LoadImage(@"scene1ObjLyr1.png");
+
+            Raylib.ImageResizeNN(ref scene1ObjLyr1Img, 800, 600);
+
+            Texture2D scene1ObjLyr1Tex = Raylib.LoadTextureFromImage(scene1ObjLyr1Img);
+
+            //BOTTOM LAYER
+            Image scene1ObjLyr2Img = Raylib.LoadImage(@"scene1ObjLyr2.png");
+
+            Raylib.ImageResizeNN(ref scene1ObjLyr2Img, 800, 600);
+
+            Texture2D scene1ObjLyr2Tex = Raylib.LoadTextureFromImage(scene1ObjLyr2Img);
+
+
+
+
+
+
+
             Raylib.SetTargetFPS(60);
 
 
@@ -116,7 +154,21 @@ namespace RPG
                 if (scene == "game")
                 {
 
+                    //SCENE AND BOTTOM TEXTURES
+
+                    Raylib.DrawTexture(scene1Tex, 0, 0, Color.WHITE);
+
+                    Raylib.DrawTexture(scene1ObjLyr2Tex, 0, 0, Color.WHITE);
+
+
+
+                    //IMPORTANT BOOLEAN
+
                     bool isMoving = false;
+
+
+                    Raylib.DrawRectangle(600, 200, 100, 100, Color.WHITE);
+
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
                     {
@@ -197,14 +249,16 @@ namespace RPG
 
                     }
 
-
-                    Raylib.BeginDrawing();
-
-                    Raylib.ClearBackground(Color.WHITE);
-
-                    Raylib.EndDrawing();
+                
+                //THE OTHER TEXTURE THAT MAKES CHARACTER STAY BEHIND OBJECTS
+                Raylib.DrawTexture(scene1ObjLyr1Tex, 0 , 0 , Color.WHITE);
 
 
+                Raylib.BeginDrawing();
+
+                Raylib.ClearBackground(Color.WHITE);
+
+                Raylib.EndDrawing();
 
 
                 }
