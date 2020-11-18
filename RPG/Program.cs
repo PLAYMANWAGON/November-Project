@@ -174,8 +174,6 @@ namespace RPG
 
                     bool isMoving = false;
 
-                    bool allowMovement = true;
-
 
                     //DISPLAYED (INVISIBLE) COLLISION BOXES
 
@@ -186,19 +184,6 @@ namespace RPG
 
 
                     //MOVEMENT, DIRECTION, SCARY MONSTERS AND NICE SPRITES AND SOME OTHER CRAP 
-
-                    if (areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_UP)) {
-
-                        allowMovement = false;
-
-                    }
-
-                    else {
-                        allowMovement = true;
-                    }
-
-                    if (allowMovement == true) {
-
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
                     {
@@ -247,7 +232,6 @@ namespace RPG
                         isMoving = true;
                     }
 
-                    }
 
 
                     //THE CODE THAT REMOVES GHOSTING (OTHERWISE TWO SPRITES ARE DISPLAYED AT THE SAME TIME WHILE MOVING)
@@ -280,7 +264,11 @@ namespace RPG
 
                     }
 
-                    
+                    if (areOverlapping == true) {
+
+
+
+                    }
                 
                     //THE OTHER TEXTURE THAT MAKES CHARACTER STAY BEHIND OBJECTS
                     Raylib.DrawTexture(scene1ObjLyr1Tex, 0 , 0 , Color.WHITE);
