@@ -13,10 +13,6 @@ namespace RPG
 
             Random generator = new Random();
 
-            //CollisionDetection Square
-
-            new colRect = 
-
             //-----STRINGS-----
 
             //GAME SCENE THINGY
@@ -50,6 +46,11 @@ namespace RPG
             int width = 800;
 
             int height = 600;
+
+            //CollisionDetection Square
+
+            Rectangle colRect = new Rectangle(590, 200, 100, 100); 
+            
 
 
             //-----IMAGES AND TEXTURES AND SCENES-----
@@ -150,6 +151,13 @@ namespace RPG
             while (!Raylib.WindowShouldClose())
             {
 
+                 //PLAYERBOX FOR COLLISIONS N SHIT
+            
+                Rectangle playRect = new Rectangle(xPos+10, yPos+52, 44, 12);
+
+                bool areOverlapping = Raylib.CheckCollisionRecs(colRect, playRect);
+
+
 
                 if (scene == "game")
                 {
@@ -166,8 +174,30 @@ namespace RPG
 
                     bool isMoving = false;
 
+                    bool allowMovement = true;
 
-                    Raylib.DrawRectangle(600, 200, 100, 100, Color.WHITE);
+
+                    //DISPLAYED (INVISIBLE) COLLISION BOXES
+
+                    Raylib.DrawRectangleRec(colRect,Color.WHITE);
+
+                    Raylib.DrawRectangleRec(playRect, Color.WHITE);
+
+
+
+                    //MOVEMENT, DIRECTION, SCARY MONSTERS AND NICE SPRITES AND SOME OTHER CRAP 
+
+                    if (areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT) || areOverlapping == true && Raylib.IsKeyPressed(KeyboardKey.KEY_UP)) {
+
+                        allowMovement = false;
+
+                    }
+
+                    else {
+                        allowMovement = true;
+                    }
+
+                    if (allowMovement == true) {
 
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
@@ -217,11 +247,12 @@ namespace RPG
                         isMoving = true;
                     }
 
+                    }
+
+
                     //THE CODE THAT REMOVES GHOSTING (OTHERWISE TWO SPRITES ARE DISPLAYED AT THE SAME TIME WHILE MOVING)
 
                     if (isMoving == false) {
-                    
-                    //"KEEP CHARACTER SPRITE IN THE SAME DIRECTION WHEN NOT PRESSING ANYTHING" CODE
 
                         if (facing == "east") {
 
@@ -249,19 +280,23 @@ namespace RPG
 
                     }
 
+                    
                 
-                //THE OTHER TEXTURE THAT MAKES CHARACTER STAY BEHIND OBJECTS
-                Raylib.DrawTexture(scene1ObjLyr1Tex, 0 , 0 , Color.WHITE);
+                    //THE OTHER TEXTURE THAT MAKES CHARACTER STAY BEHIND OBJECTS
+                    Raylib.DrawTexture(scene1ObjLyr1Tex, 0 , 0 , Color.WHITE);
 
 
-                Raylib.BeginDrawing();
+                    Raylib.BeginDrawing();
 
-                Raylib.ClearBackground(Color.WHITE);
+                    Raylib.ClearBackground(Color.WHITE);
 
-                Raylib.EndDrawing();
+                    Raylib.EndDrawing();
 
 
                 }
+
+
+
 
                 if (scene == "titleScreen")
                 {
