@@ -49,8 +49,10 @@ namespace RPG
 
             //CollisionDetection Square
 
-            Rectangle colRect = new Rectangle(590, 200, 100, 100); 
-            
+            Rectangle colRect = new Rectangle(590, 200, 100, 100);
+
+            Rectangle colRect2 = new Rectangle(200, 250, 50, 50);
+
 
 
             //-----IMAGES AND TEXTURES AND SCENES-----
@@ -68,28 +70,30 @@ namespace RPG
 
 
 
-                    //NORTH--------------------------------------------------
+            #region north
+
             Image charLoN = Raylib.LoadImage(@"worldN.png");
 
             Raylib.ImageResizeNN(ref charLoN, 64, 64);
 
             Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
 
-                    //SOUTH--------------------------------------------------
+            #endregion
+            //SOUTH--------------------------------------------------
             Image charLoS = Raylib.LoadImage(@"worldS.png");
 
             Raylib.ImageResizeNN(ref charLoS, 64, 64);
 
             Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
 
-                    //EAST--------------------------------------------------
+            //EAST--------------------------------------------------
             Image charLoE = Raylib.LoadImage(@"worldE.png");
 
             Raylib.ImageResizeNN(ref charLoE, 64, 64);
 
             Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
 
-                    //WEST--------------------------------------------------
+            //WEST--------------------------------------------------
             Image charLoW = Raylib.LoadImage(@"worldW.png");
 
             Raylib.ImageResizeNN(ref charLoW, 64, 64);
@@ -98,18 +102,10 @@ namespace RPG
 
 
 
-
-            //CRAP GRASS TEXTURE
-
-            Image grassImg = Raylib.LoadImage(@"grassTex.png");
-
-            Raylib.ImageResizeNN(ref grassImg, 64, 64);
-
-            Texture2D grassTex = Raylib.LoadTextureFromImage(grassImg);
-
             //SCENE 1 TEXTURES
 
-                //SCENERY
+
+            //SCENERY
 
             Image scene1Img = Raylib.LoadImage(@"scene1.png");
 
@@ -117,8 +113,8 @@ namespace RPG
 
             Texture2D scene1Tex = Raylib.LoadTextureFromImage(scene1Img);
 
-                //SCENERY OBJECTS
-            
+            //SCENERY OBJECTS
+
             //TOP LAYER
             Image scene1ObjLyr1Img = Raylib.LoadImage(@"scene1ObjLyr1.png");
 
@@ -151,11 +147,13 @@ namespace RPG
             while (!Raylib.WindowShouldClose())
             {
 
-                 //PLAYERBOX FOR COLLISIONS N SHIT
-            
-                Rectangle playRect = new Rectangle(xPos+10, yPos+52, 44, 12);
+                //PLAYERBOX FOR COLLISIONS N SHIT
+
+                Rectangle playRect = new Rectangle(xPos + 10, yPos + 52, 44, 12);
 
                 bool areOverlapping = Raylib.CheckCollisionRecs(colRect, playRect);
+
+                bool areOverlapping2 = Raylib.CheckCollisionRecs(colRect2, playRect);
 
 
 
@@ -177,11 +175,15 @@ namespace RPG
 
                     //DISPLAYED (INVISIBLE) COLLISION BOXES
 
-                    Raylib.DrawRectangleRec(colRect,Color.WHITE);
+                    Raylib.DrawRectangleRec(colRect, Color.WHITE);
 
                     Raylib.DrawRectangleRec(playRect, Color.WHITE);
 
+                    Raylib.DrawRectangleRec(colRect2, Color.WHITE);
 
+
+                    float xMovement = 0;
+                    float yMovement = 0;
 
                     //MOVEMENT, DIRECTION, SCARY MONSTERS AND NICE SPRITES AND SOME OTHER CRAP 
 
@@ -191,7 +193,7 @@ namespace RPG
 
                         Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
 
-                        xPos += 5f;
+                        xMovement = 5f;
 
                         isMoving = true;
 
@@ -203,7 +205,7 @@ namespace RPG
 
                         Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
 
-                        xPos -= 5f;
+                        xMovement = -5f;
 
                         isMoving = true;
 
@@ -215,10 +217,10 @@ namespace RPG
 
                         Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
 
-                        yPos -= 5f;
+                        yMovement = -5f;
 
                         isMoving = true;
-                        
+
                     }
 
                     if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
@@ -227,36 +229,50 @@ namespace RPG
 
                         Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
 
-                        yPos += 5f;
+                        yMovement = 5f;
 
                         isMoving = true;
+                    }
+
+                    xPos += xMovement;
+                    yPos += yMovement;
+
+
+                    if (Raylib.CheckCollisionRecs(playRect, colRect))
+                    {
+                        xPos -= xMovement;
                     }
 
 
 
                     //THE CODE THAT REMOVES GHOSTING (OTHERWISE TWO SPRITES ARE DISPLAYED AT THE SAME TIME WHILE MOVING)
 
-                    if (isMoving == false) {
+                    if (isMoving == false)
+                    {
 
-                        if (facing == "east") {
+                        if (facing == "east")
+                        {
 
                             Raylib.DrawTexture(worldE, (int)xPos, (int)yPos, Color.WHITE);
 
                         }
 
-                        if (facing == "west") {
+                        if (facing == "west")
+                        {
 
                             Raylib.DrawTexture(worldW, (int)xPos, (int)yPos, Color.WHITE);
 
                         }
 
-                        if (facing == "north") {
+                        if (facing == "north")
+                        {
 
                             Raylib.DrawTexture(worldN, (int)xPos, (int)yPos, Color.WHITE);
 
                         }
 
-                        if (facing == "south"){
+                        if (facing == "south")
+                        {
 
                             Raylib.DrawTexture(worldS, (int)xPos, (int)yPos, Color.WHITE);
 
@@ -264,14 +280,15 @@ namespace RPG
 
                     }
 
-                    if (areOverlapping == true) {
+                    if (areOverlapping == true)
+                    {
 
 
 
                     }
-                
+
                     //THE OTHER TEXTURE THAT MAKES CHARACTER STAY BEHIND OBJECTS
-                    Raylib.DrawTexture(scene1ObjLyr1Tex, 0 , 0 , Color.WHITE);
+                    Raylib.DrawTexture(scene1ObjLyr1Tex, 0, 0, Color.WHITE);
 
 
                     Raylib.BeginDrawing();
@@ -288,62 +305,70 @@ namespace RPG
 
                 if (scene == "titleScreen")
                 {
-                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)){
+                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN))
+                    {
 
-                        menu ++;
+                        menu++;
 
                     }
 
-                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_UP)){
+                    if (Raylib.IsKeyPressed(KeyboardKey.KEY_UP))
+                    {
 
-                        menu --;
+                        menu--;
 
                     }
 
 
                     Raylib.BeginDrawing();
-                    
-                        if (menu == 0) {
 
-                            Raylib.DrawText("<", 500, 300, 32, Color.WHITE);
+                    if (menu == 0)
+                    {
 
-                        }
+                        Raylib.DrawText("<", 500, 300, 32, Color.WHITE);
 
-                        if (menu == 1) {
+                    }
 
-                            Raylib.DrawText("<", 500, 350, 32, Color.WHITE);
+                    if (menu == 1)
+                    {
 
-                        }
+                        Raylib.DrawText("<", 500, 350, 32, Color.WHITE);
 
-                        if (menu == 2) {
+                    }
 
-                            Raylib.DrawText("<", 500, 400, 32, Color.WHITE);
+                    if (menu == 2)
+                    {
 
-                        }
+                        Raylib.DrawText("<", 500, 400, 32, Color.WHITE);
 
-                        if (menu == 0 && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)) {
+                    }
 
-                            scene = "game";
-                        }
+                    if (menu == 0 && Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
+                    {
 
-                        if (menu > 2) {
+                        scene = "game";
+                    }
 
-                             menu = 2;
-                        }
+                    if (menu > 2)
+                    {
 
-                        if (menu < 0) {
+                        menu = 2;
+                    }
 
-                            menu = 0;
-                        }
+                    if (menu < 0)
+                    {
+
+                        menu = 0;
+                    }
 
                     Raylib.ClearBackground(Color.PURPLE);
 
                     Raylib.DrawText("Text", 240, 100, 128, Color.WHITE);
 
-                    Raylib.DrawText("Start Game", width/3 + 20, 300, 32, Color.WHITE);
-                    Raylib.DrawText("Options", width/3 + 20, 350, 32, Color.WHITE);
-                    Raylib.DrawText("Quit", width/3 + 20, 400, 32, Color.WHITE);
-                    
+                    Raylib.DrawText("Start Game", width / 3 + 20, 300, 32, Color.WHITE);
+                    Raylib.DrawText("Options", width / 3 + 20, 350, 32, Color.WHITE);
+                    Raylib.DrawText("Quit", width / 3 + 20, 400, 32, Color.WHITE);
+
 
 
 
