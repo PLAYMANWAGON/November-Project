@@ -69,6 +69,7 @@ namespace RPG
             //CHARACTER TEXTURE - WORLD
 
 
+            #region Character Textures
 
             #region north
 
@@ -79,26 +80,36 @@ namespace RPG
             Texture2D worldN = Raylib.LoadTextureFromImage(charLoN);
 
             #endregion
-            //SOUTH--------------------------------------------------
+
+            #region south 
             Image charLoS = Raylib.LoadImage(@"worldS.png");
 
             Raylib.ImageResizeNN(ref charLoS, 64, 64);
 
             Texture2D worldS = Raylib.LoadTextureFromImage(charLoS);
 
-            //EAST--------------------------------------------------
+            #endregion
+
+            #region east
             Image charLoE = Raylib.LoadImage(@"worldE.png");
 
             Raylib.ImageResizeNN(ref charLoE, 64, 64);
 
             Texture2D worldE = Raylib.LoadTextureFromImage(charLoE);
 
-            //WEST--------------------------------------------------
+            #endregion
+
+            #region west
             Image charLoW = Raylib.LoadImage(@"worldW.png");
 
             Raylib.ImageResizeNN(ref charLoW, 64, 64);
 
             Texture2D worldW = Raylib.LoadTextureFromImage(charLoW);
+
+            #endregion
+
+
+            #endregion
 
 
 
